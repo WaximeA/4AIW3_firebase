@@ -2,16 +2,29 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+    html, body {
+      min-height: 100vh;
+      height: 100%;
+      font-family: sans-serif;
+      background-color: #FEFEFE;
+    }
+    form input {
+      display: block;
+      margin: 1rem;
+    }
+  </style>
 </head>
 <body>
-<form id="form">
-  <input type="email" name="email" id="email">
-  <button type="submit">Subscribe to the newsletter</button>
-</form>
-<script type="module" src="./src/js/app.js"></script>
+<chat-app></chat-app>
+<script type="module" src="./src/js/components/chat-app.js"></script>
 </body>
 </html>
