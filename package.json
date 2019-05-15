@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/WaximeA/4AIW3_firebase#readme",
   "dependencies": {
-    "firebase-tools": "^6.9.2"
+    "firebase": "^6.0.2"
   },
   "devDependencies": {
     "polymer-cli": "^1.9.9"
