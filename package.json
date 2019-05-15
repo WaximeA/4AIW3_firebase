@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/WaximeA/4AIW3_firebase/issues"
   },
-  "homepage": "https://github.com/WaximeA/4AIW3_firebase#readme"
+  "homepage": "https://github.com/WaximeA/4AIW3_firebase#readme",
+  "dependencies": {
+    "firebase-tools": "^6.9.2"
+  },
+  "devDependencies": {
+    "polymer-cli": "^1.9.9"
+  }
 }
