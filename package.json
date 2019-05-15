@@ -1,0 +1,19 @@
+{
+  "name": "4aiw3-firebase",
+  "version": "1.0.0",
+  "description": "PWA with firebase",
+  "main": "src/js/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WaximeA/4AIW3_firebase.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WaximeA/4AIW3_firebase/issues"
+  },
+  "homepage": "https://github.com/WaximeA/4AIW3_firebase#readme"
+}
