@@ -31,15 +31,22 @@ class ChatData extends LitElement {
     this.database.ref(this.path).on('child_removed', data => this.pathChanged('child_removed', data));
   }
 
+  handleCustomChildChanged() {
+    this._data = this.data.map(item => item.val());
+    this.dispatchEvent(new CustomEvent('custom-child-changed', { detail: this._data }));
+  }
+
   pathChanged(event, data) {
     switch (event) {
       case 'value':
         break;
       case 'child_added':
         this.data = [...this.data, data];
-        this._data = this.data.map(item => item.val());
-        this.dispatchEvent(new CustomEvent('custom-child-added', { detail: this._data }));
+        this.handleCustomChildChanged();
         break;
+      case 'child_removed':
+        this.data = this.data.filter(item => item.key !== data.key);
+        this.handleCustomChildChanged();
       default:
         break;
     }

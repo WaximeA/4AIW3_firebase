@@ -36,13 +36,13 @@ class ChatApp extends LitElement {
     })
   }
 
-  customChildAdded(e) {
+  customChildChanged(e) {
     this.users = e.detail;
   }
 
   render() {
     return html` 
-      <chat-data path="users" @custom-child-added="${this.customChildAdded}"></chat-data>
+      <chat-data path="users" @custom-child-changed="${this.customChildChanged}"></chat-data>
       <slot></slot>
       <ul>
         ${this.users.map(user => html`
