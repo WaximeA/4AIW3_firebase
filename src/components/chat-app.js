@@ -1,11 +1,11 @@
 import { LitElement, html } from 'lit-element';
-import './chat-data.js';
+import './data/chat-data.js';
 
 class ChatApp extends LitElement {
 
   constructor() {
     super();
-    this.data = [];
+    this.users = [];
   }
 
   static get properties(){
@@ -16,7 +16,8 @@ class ChatApp extends LitElement {
       },
       email: { type: String },
       pseudo: { type: String },
-      data: { type: Array}
+      users: { type: Array }
+
     }
   }
 
@@ -36,16 +37,18 @@ class ChatApp extends LitElement {
   }
 
   customChildAdded(e) {
-    this.data = [
-      ...this.data,
-      e.detail
-    ];
+    this.users = e.detail;
   }
 
   render() {
     return html` 
-      <slot></slot>    
-      App loaded
+      <chat-data path="users" @custom-child-added="${this.customChildAdded}"></chat-data>
+      <slot></slot>
+      <ul>
+        ${this.users.map(user => html`
+          <li>${user.name} ${user.email}</li>
+        `)}
+      </ul>
     `
   }
 }
