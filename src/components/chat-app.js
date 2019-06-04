@@ -1,5 +1,6 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 import './data/chat-data.js';
+import './data/chat-auth.js';
 
 class ChatApp extends LitElement {
 
@@ -44,6 +45,7 @@ class ChatApp extends LitElement {
     return html` 
       <chat-data path="users" @custom-child-changed="${this.customChildChanged}"></chat-data>
       <slot></slot>
+      <chat-auth></chat-auth>
       <ul>
         ${this.users.map(user => html`
           <li>${user.name} ${user.email}</li>
