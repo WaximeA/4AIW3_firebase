@@ -2,52 +2,22 @@ import { LitElement, html } from 'lit-element';
 import firebase from 'firebase/app';
 import 'firebase/database';
 
-class ChatData extends LitElement {
-
+export class ChatData extends LitElement {
   constructor() {
     super();
-    this.data = [];
-
     this.database = {};
-    this.path = "/";
-
-    this.apiKey = "";
-    this.authDomain = "";
-    this.databaseURL = "";
-    this.projectId = "";
-    this.storageBucket = "";
-    this.messagingSenderId = "";
-    this.appId = "";
+    this.path = "";
   }
 
-  static get properties(){
+  static get properties() {
     return {
-      data: { type: Array },
-
-      database: { type: Object },
-      path: { type: String },
-
-      apiKey: { type: String },
-      authDomain: { type: String },
-      databaseURL: { type: String },
-      projectId: { type: String },
-      storageBucket: { type: String },
-      messagingSenderId: { type: String },
-      appId: { type: String }
+      database: Object,
+      path: String,
     }
   }
 
   firstUpdated() {
-    firebase.initializeApp({
-      apiKey: this.apiKey,
-      authDomain: this.authDomain,
-      databaseURL: this.databaseURL,
-      projectId: this.projectId,
-      storageBucket: this.storageBucket,
-      messagingSenderId: this.messagingSenderId,
-      appId: this.appId
-    });
-
+    firebase.initializeApp(document.config);
     this.database = firebase.database();
 
     this.database.ref(this.path).on('value', (data => this.pathChanged('value', data)));
@@ -55,10 +25,6 @@ class ChatData extends LitElement {
     this.database.ref(this.path).on('child_changed', (data => this.pathChanged('child_changed', data)));
     this.database.ref(this.path).on('child_moved', (data => this.pathChanged('child_moved', data)));
     this.database.ref(this.path).on('child_removed', (data => this.pathChanged('child_removed', data)));
-  }
-
-  push(data) {
-    this.database.ref(this.path).push(data);
   }
 
   pathChanged(event, data) {
