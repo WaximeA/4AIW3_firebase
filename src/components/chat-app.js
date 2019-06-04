@@ -43,8 +43,9 @@ class ChatApp extends LitElement {
   }
 
   render() {
-    return html`     
-    App loaded
+    return html` 
+      <slot></slot>    
+      App loaded
     `
   }
 }
