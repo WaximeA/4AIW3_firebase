@@ -30,10 +30,13 @@ class ChatLogin extends LitElement {
 
   firstUpdated() {
     this.auth = firebase.auth();
+
     this.auth.onAuthStateChanged(user => {
       if (!user) {
         // handle logout
+        localStorage.setItem('logged', false);
       } else {
+        localStorage.setItem('logged', true);
         this.dispatchEvent(new CustomEvent('user-logged', { detail: { user }}));
       }
     });
