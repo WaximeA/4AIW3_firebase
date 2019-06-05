@@ -94,6 +94,36 @@ class ChatApp extends LitElement {
   firstUpdated() {
     this.unresolved = false;
     this.logged = localStorage.getItem('logged') === 'true' ? true : false;
+
+    if (Notification.permission === 'granted') {
+         navigator.serviceWorker.ready
+           .then(registration => {
+             registration.pushManager.subscribe({
+               userVisibleOnly: true,
+               applicationServerKey: this.urlBase64ToUint8Array(document.config.publicKey)
+             }).then(async subscribtion => {
+               await fetch('http://localhost:8085/subscribe', {
+                 method: 'POST',
+                 headers: {
+                   'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify(subscribtion)
+               })
+             });
+           });
+       }
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
   customChildChanged(e) {
@@ -134,6 +164,54 @@ class ChatApp extends LitElement {
   }
 
 
+
+
+
+
+
+
+
+            urlBase64ToUint8Array(base64String) {
+               const padding = '='.repeat((4 - base64String.length % 4) % 4);
+               const base64 = (base64String + padding)
+                 .replace(/-/g, '+')
+                 .replace(/_/g, '/');
+
+               const rawData = window.atob(base64);
+               const outputArray = new Uint8Array(rawData.length);
+
+               for (let i = 0; i < rawData.length; ++i) {
+                 outputArray[i] = rawData.charCodeAt(i);
+               }
+               return outputArray;
+             }
+
+               
+            subscribe() {
+               if (('serviceWorker' in navigator) || ('PushManager' in window)) {
+                 Notification.requestPermission()
+                   .then(function(result) {
+                     if (result === 'denied') {
+                       console.log('Permission wasn\'t granted. Allow a retry.');
+                       return;
+                     }
+                     if (result === 'default') {
+                       console.log('The permission request was dismissed.');
+                       return;
+                     }
+                     console.log('Notification granted', result);
+                     // Do something with the granted permission.
+                   });
+               }
+             }
+
+
+
+
+
+
+
+
   render() {
     return html` 
       <chat-store collection="messages" @custom-child-changed="${this.customChildChanged}"></chat-store>
@@ -144,6 +222,13 @@ class ChatApp extends LitElement {
             <chat-login @user-logged="${this.handleLogin}"></chat-login>
           ` : html `
             <h1> Hi ${this.user.email} </h1>
+            
+            <button type="button" @click="${this.subscribe}">Subcribe</button>
+            
+            
+            
+            
+            
             
             <ul>
               ${this.messages.map(message => html`
