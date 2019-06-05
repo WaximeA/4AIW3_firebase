@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import './data/chat-store.js';
 import './data/chat-data.js';
 import './data/chat-auth.js';
 import './data/chat-login.js';
@@ -121,19 +122,21 @@ class ChatApp extends LitElement {
 
   sendMessage(e) {
     e.preventDefault();
-    firebase.database().ref().child('messages').push({
+    if (!this.message) return;
+    firebase.firestore().collection('messages').add({
       content: this.message,
       user: this.user.uid,
       email: this.user.email,
       date: new Date().getTime()
     });
+
     this.message = '';
   }
 
 
   render() {
     return html` 
-      <chat-data path="messages" @custom-child-changed="${this.customChildChanged}"></chat-data>
+      <chat-store collection="messages" @custom-child-changed="${this.customChildChanged}"></chat-store>
       <slot></slot>
       ${
           !this.logged ? html`

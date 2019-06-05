@@ -21,7 +21,6 @@ class ChatData extends LitElement {
   }
 
   firstUpdated() {
-    firebase.initializeApp(document.config);
     this.database = firebase.database();
 
     this.database.ref(this.path).on('value', data => this.pathChanged('value', data));
